@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return "Hello, World! Welcome to my simple Python web application."
+    return "Hello, pan! Welcome to my simple Python web application."
 
 @app.route('/api/data')
 def get_data():
