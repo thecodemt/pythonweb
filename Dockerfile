@@ -1,20 +1,20 @@
-# 使用官方 Python 基础镜像
+# 使用官方 Python 镜像作为基础镜像
 FROM python:3.9-slim
 
 # 设置工作目录
 WORKDIR /app
 
-# 复制依赖项文件到容器中
+# 将 requirements.txt 复制到容器中
 COPY requirements.txt .
 
-# 安装依赖项
-RUN pip install -r requirements.txt
+# 安装 Python 依赖
+RUN pip install --no-cache-dir -r requirements.txt
 
-# 复制应用程序代码到容器中
+# 将当前目录中的所有文件复制到容器中的 /app 目录
 COPY . .
 
-# 暴露应用程序的端口
-EXPOSE 8080
+# 暴露应用运行的端口
+EXPOSE 5000
 
-# 运行应用程序
-CMD ["python", "app/server.py"]
+# 定义容器启动时运行的命令
+CMD ["python", "app.py"]
