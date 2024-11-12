@@ -1,2 +1,3 @@
-This is a simple python web application.
-It is created for exprimentation.
+这是一个简单的 python web 应用。
+
+被开发用来实验。
