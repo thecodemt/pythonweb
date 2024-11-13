@@ -52,7 +52,7 @@ pipeline {
                 sh "docker push ${env.DOCKER_IMAGE}:${env.VERSION}"
                 
                 // 清理本地镜像
-                sh "docker image rm ${env.DOCKER_IMAGE}"
+                sh "docker image rm ${env.DOCKER_IMAGE}:${env.VERSION}"
             }
         }
     }
