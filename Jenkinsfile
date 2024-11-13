@@ -44,7 +44,7 @@ pipeline {
                 }
 
                 // 推送 Docker 镜像到 Docker Registry
-                sh 'docker push flask_app:latest'
+                sh 'docker push jackpot007/flask_app:latest'
             }
         }
     }
