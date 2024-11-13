@@ -45,6 +45,8 @@ pipeline {
 
                 // 推送 Docker 镜像到 Docker Registry
                 sh 'docker push jackpot007/flask_app:latest'
+                
+                // 清理本地镜像
                 sh 'docker image rm jackpot007/flask_app'
             }
         }
