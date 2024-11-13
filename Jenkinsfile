@@ -17,7 +17,7 @@ pipeline {
             }
             steps {
                 // 安装依赖
-                sh 'pip install --upgrade pip'
+                sh 'sudo pip install --upgrade pip'
                 sh 'pip install -r requirements.txt'
                 
                 // 运行测试
