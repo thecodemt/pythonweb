@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        VERSION = '1.0.0'  // 定义版本号
+        VERSION = '1.0'  // 定义版本号
         DOCKER_IMAGE = 'jackpot007/flask_app'
     }
 
