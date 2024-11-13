@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        // 定义环境变量
-        VERSION = '1.0'
+        VERSION = '1.0.0'  // 定义版本号
+        DOCKER_IMAGE = 'jackpot007/flask_app'
     }
 
     stages {
@@ -35,7 +35,7 @@ pipeline {
             steps {
                 // 构建 Docker 镜像
                 script {
-                    sh 'docker build -t jackpot007/flask_app:${env.VERSION} .'
+                    sh "docker build -t ${env.DOCKER_IMAGE}:${env.VERSION} ."
                 }
             }
         }
@@ -49,10 +49,10 @@ pipeline {
                 }
 
                 // 推送 Docker 镜像到 Docker Registry
-                sh 'docker push jackpot007/flask_app:${env.VERSION}'
+                sh "docker push ${env.DOCKER_IMAGE}:${env.VERSION}"
                 
                 // 清理本地镜像
-                sh 'docker image rm jackpot007/flask_app'
+                sh "docker image rm ${env.DOCKER_IMAGE}"
             }
         }
     }
