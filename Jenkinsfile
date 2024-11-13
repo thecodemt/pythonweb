@@ -9,24 +9,19 @@ pipeline {
             }
         }
 
-        stage('Build') {
-            steps {
-                // 设置 Python 环境并安装依赖
-                script {
-                    sh '''
-                    python -m pip install --upgrade pip
-                    pip install -r requirements.txt
-                    '''
+        stage('Build and Test') {
+            agent {
+                docker {
+                    image 'python:3.8'  // 使用 Python 3.8 的 Docker 镜像
                 }
             }
-        }
-
-        stage('Test') {
             steps {
+                // 安装依赖
+                sh 'pip install --upgrade pip'
+                sh 'pip install -r requirements.txt'
+                
                 // 运行测试
-                script {
-                    sh 'pytest test_sample.py'
-                }
+                sh 'pytest test.py'
             }
         }
 
@@ -34,19 +29,21 @@ pipeline {
             steps {
                 // 构建 Docker 镜像
                 script {
-                    sh 'docker build -t my_flask_app .'
+                    sh 'docker build -t flask_app .'
                 }
             }
         }
 
-        stage('Deploy') {
+        stage('Push to Docker Registry') {
             steps {
-                // 部署到服务器
-                script {
-                    sh '''
-                    echo "Deploying to server..."
-                    '''
+                // 使用凭据登录到 Docker Registry
+                withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                    // 登录到 Docker Registry
+                    sh "echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin"
                 }
+
+                // 推送 Docker 镜像到 Docker Registry
+                sh 'docker push flask_app:latest'
             }
         }
     }
