@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    environment {
+        // 定义环境变量
+        VERSION = '1.0'
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -44,7 +49,7 @@ pipeline {
                 }
 
                 // 推送 Docker 镜像到 Docker Registry
-                sh 'docker push jackpot007/flask_app:latest'
+                sh 'docker push jackpot007/flask_app:${env.VERSION}'
                 
                 // 清理本地镜像
                 sh 'docker image rm jackpot007/flask_app'
