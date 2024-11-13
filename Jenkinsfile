@@ -30,7 +30,7 @@ pipeline {
             steps {
                 // 构建 Docker 镜像
                 script {
-                    sh 'docker build -t flask_app .'
+                    sh 'docker build -t jackpot007/flask_app .'
                 }
             }
         }
