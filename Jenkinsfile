@@ -13,11 +13,12 @@ pipeline {
             agent {
                 docker {
                     image 'python:3.8'  // 使用 Python 3.8 的 Docker 镜像
+                    args '-u root'  // 以 root 身份运行容器
                 }
             }
             steps {
                 // 安装依赖
-                sh 'sudo pip install --upgrade pip'
+                sh 'pip install --upgrade pip'
                 sh 'pip install -r requirements.txt'
                 
                 // 运行测试
