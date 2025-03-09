@@ -58,8 +58,12 @@ pipeline {
 
         stage("Deploy") {
             steps {
-                sh "docker stop flask-app"
-                sh "docker rm flask-app"
+                script {
+                    def result = sh(script: 'docker rm -f flask-app', returnStatus: true)  // 捕获状态码
+                    if (result != 0) {
+                        echo 'no such container exists!'
+                    }
+                }
                 sh "docker run -d -p 80:5000 --name flask-app ${env.DOCKER_IMAGE}:${env.VERSION}"
             }
         }
