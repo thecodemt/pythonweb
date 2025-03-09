@@ -55,6 +55,14 @@ pipeline {
                 sh "docker image rm ${env.DOCKER_IMAGE}:${env.VERSION}"
             }
         }
+
+        stage("Deploy") {
+            steps {
+                sh "docker stop flask-app"
+                sh "docker rm flask-app"
+                sh "docker run -d -p 80:5000 --name flask-app ${env.DOCKER_IMAGE}:${env.VERSION}"
+            }
+        }
     }
 
     post {
